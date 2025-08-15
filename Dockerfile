@@ -1,17 +1,10 @@
-# Use a multi-platform-aware base image
 FROM alpine:latest
 
-# TARGETARCH is automatically provided by buildx
 ARG TARGETPLATFORM
 
-# Add ca-certificates for HTTPS connections
-RUN apk --no-cache add ca-certificates
+WORKDIR /
 
-WORKDIR /root/
-
-# Copy the pre-compiled binary from the build context
-# The workflow will place the binaries in dist/<arch>/go-certdist
-COPY dist/${TARGETPLATFORM}/certdist /certdist
+COPY build/${TARGETPLATFORM}/certdist /certdist
 
 # Expose the default server port
 EXPOSE 8080
