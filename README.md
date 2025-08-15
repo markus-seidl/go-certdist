@@ -123,6 +123,7 @@ The client will check for an existing certificate. If one exists and is not expi
 To run the end-to-end integration test:
 
 ```bash
+go build -o certdist
 ./scripts/run-integration-test.sh
 ```
 
