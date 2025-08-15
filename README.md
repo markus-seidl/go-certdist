@@ -13,7 +13,7 @@ Allowlisting age public keys is implemented to prevent unauthorized access to ce
 
 ## Getting Started
 
-### 1. Build from Source
+### Build from Source
 
 First, clone the repository and build the binary:
 
@@ -22,6 +22,20 @@ go build
 ```
 
 This will create a `go-certdist` (or `go-certdist.exe`) binary in the project root.
+
+### Download release or docker container
+
+You can download the latest release or use the docker container from GitHub Container Registry.
+
+```bash
+docker pull ghcr.io/markus-seidl/go-certdist:1.0
+```
+
+or 
+
+```bash
+curl -L https://github.com/markus-seidl/go-certdist/releases/latest/download/certdist-linux-amd64 -o certdist
+```
 
 ### 2. Generate Keys
 

@@ -138,9 +138,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  create-release:
-    name: Create Release
-    needs: build
+  create-release-artifacts:
+    name: Create release artifacts
+    needs: integration-test
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     permissions:
