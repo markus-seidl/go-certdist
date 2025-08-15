@@ -74,4 +74,5 @@ jobs:
       - name: Run integration test
         run: |
           chmod +x scripts/run-integration-test.sh
-          scripts/run-integration-test.sh
+          chmod +x build/certdist
+          scripts/run-integration-test.sh build/certdist
