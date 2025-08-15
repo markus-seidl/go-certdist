@@ -76,3 +76,52 @@ jobs:
           chmod +x scripts/run-integration-test.sh
           chmod +x build/certdist
           scripts/run-integration-test.sh build/certdist
+
+  create-container-images:
+    needs: build
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/master'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Prepare directory structure for TARGETPLATFORM
+        run: |
+          mkdir -p build/linux/amd64
+          mkdir -p build/linux/arm64
+          cp artifacts/certdist-linux-amd64 build/linux/amd64/certdist
+          cp artifacts/certdist-linux-arm64 build/linux/arm64/certdist
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
