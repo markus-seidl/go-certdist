@@ -5,7 +5,7 @@ on:
   push:
     branches: [ master ]
     tags:
-      - 'v*'
+      - '*'
   pull_request:
     branches: [ master ]
 
@@ -82,7 +82,7 @@ jobs:
   create-container-images:
     needs: integration-test
     runs-on: ubuntu-latest
-    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/'))
     permissions:
       contents: read
       packages: write
@@ -142,7 +142,7 @@ jobs:
     name: Create Release
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/')
     permissions:
       contents: write
     steps:
