@@ -18,12 +18,18 @@ func StartServer(config common.ServerModeConfig) {
 	}
 
 	http.HandleFunc(common.CertificateRequestEndpoint, handleCertificateRequest(config))
+	http.HandleFunc(common.HealthEndpoint, handleHealthCheck)
 
 	addr := fmt.Sprintf("%s:%d", config.ServerDetails.ListenAddress, config.ServerDetails.Port)
 	log.Info().Str("address", addr).Msg("Starting server")
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatal().Err(err).Msg("Failed to start server")
 	}
+}
+
+func handleHealthCheck(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	_, _ = fmt.Fprintln(w, "OK")
 }
 
 func handleCertificateRequest(config common.ServerModeConfig) func(w http.ResponseWriter, r *http.Request) {

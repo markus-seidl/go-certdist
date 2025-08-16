@@ -3,6 +3,7 @@ package common
 import "time"
 
 const CertificateRequestEndpoint = "/api/v1/certificate-request"
+const HealthEndpoint = "/health"
 
 //
 // Server
