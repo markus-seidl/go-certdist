@@ -1,6 +1,7 @@
 package server
 
 import (
+	"crypto/subtle"
 	"encoding/json"
 	"fmt"
 	"go-certdist/common"
@@ -105,10 +106,18 @@ func handleCertificateRequest(config common.ServerModeConfig) func(w http.Respon
 }
 
 func validateAgePublicKey(config common.ServerModeConfig, reqPublicKey string) error {
+	// Secure comparison, always compare everything
+
+	found := false
 	for _, allowedKey := range config.PublicAgeKeys {
-		if allowedKey == reqPublicKey {
-			return nil
+		if subtle.ConstantTimeCompare([]byte(allowedKey), []byte(reqPublicKey)) == 1 {
+			found = true
+			// no break, constant time comparisons
 		}
+	}
+
+	if found {
+		return nil
 	}
 
 	return fmt.Errorf("public key not whitelisted")
