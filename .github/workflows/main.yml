@@ -98,12 +98,14 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 
-      - name: Prepare directory structure for TARGETPLATFORM
+      - name: Move artifacts to build directory
         run: |
-          mkdir -p build/linux/amd64
-          mkdir -p build/linux/arm64
-          cp artifacts/certdist-linux-amd64/certdist-linux-amd64 build/linux/amd64/certdist
-          cp artifacts/certdist-linux-arm64/certdist-linux-arm64 build/linux/arm64/certdist
+          mkdir -p build/linux/amd64 build/linux/arm64
+          mv artifacts/certdist-linux-amd64/certdist-linux-amd64 build/linux/amd64/certdist
+          mv artifacts/certdist-linux-arm64/certdist-linux-arm64 build/linux/arm64/certdist
+          find .
+          file build/linux/amd64/certdist
+          file build/linux/arm64/certdist
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
