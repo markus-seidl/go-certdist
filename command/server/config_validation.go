@@ -22,6 +22,10 @@ func validateConfig(config *common.ServerModeConfig) error {
 }
 
 func validateServerDetails(config *common.ServerModeConfig) error {
+	if len(config.ServerDetails.ListenAddress) == 0 {
+		config.ServerDetails.ListenAddress = "127.0.0.1"
+	}
+
 	if config.ServerDetails.Port == 0 {
 		return fmt.Errorf("server.port is not configured")
 	}

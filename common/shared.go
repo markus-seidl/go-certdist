@@ -10,6 +10,7 @@ const CertificateRequestEndpoint = "/api/v1/certificate-request"
 
 type ServerDetailsConfig struct {
 	Port                 int32    `yaml:"port"`
+	ListenAddress        string   `yaml:"listen_address,omitempty"`
 	CertificateDirectory []string `yaml:"certificate_directories"`
 }
 

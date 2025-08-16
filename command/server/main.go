@@ -19,7 +19,7 @@ func StartServer(config common.ServerModeConfig) {
 
 	http.HandleFunc(common.CertificateRequestEndpoint, handleCertificateRequest(config))
 
-	addr := fmt.Sprintf(":%d", config.ServerDetails.Port)
+	addr := fmt.Sprintf("%s:%d", config.ServerDetails.ListenAddress, config.ServerDetails.Port)
 	log.Info().Str("address", addr).Msg("Starting server")
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatal().Err(err).Msg("Failed to start server")

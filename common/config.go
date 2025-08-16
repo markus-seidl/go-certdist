@@ -38,6 +38,7 @@ func WriteDummyServerConfig() {
 	dummyConfig := ServerModeConfig{
 		ServerDetails: ServerDetailsConfig{
 			Port:                 8080,
+			ListenAddress:        "127.0.0.1",
 			CertificateDirectory: []string{"/path/to/certificates"},
 		},
 		PublicAgeKeys: []string{"age1publickey"},
