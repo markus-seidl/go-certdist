@@ -81,6 +81,7 @@ The server is responsible for serving certificates to authorized clients.
 ```yaml
 server:
   port: 8080  # Use a reverse proxy to serve https
+  listen_address: "0.0.0.0"
   certificate_directories:
     - "/etc/letsencrypt/live"
 public_age_keys:
