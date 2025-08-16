@@ -45,6 +45,7 @@ jobs:
       env:
         GOOS: ${{ matrix.goos }}
         GOARCH: ${{ matrix.goarch }}
+        CGO_ENABLED: 0
       run: go build -v -o build/certdist-${{ matrix.goos }}-${{ matrix.goarch }}
 
     - name: Upload artifact
@@ -135,8 +136,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          # ,linux/amd64
-          platforms: linux/arm64
+          platforms: linux/arm64,linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
