@@ -48,6 +48,10 @@ jobs:
         CGO_ENABLED: 0
       run: go build -v -o build/certdist-${{ matrix.goos }}-${{ matrix.goarch }}
 
+    - name: Verify static linking
+      if: matrix.goos == 'linux'
+      run: file build/certdist-${{ matrix.goos }}-${{ matrix.goarch }} | grep "statically linked"
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
@@ -104,9 +108,6 @@ jobs:
           mkdir -p build/linux/amd64 build/linux/arm64
           mv artifacts/certdist-linux-amd64/certdist-linux-amd64 build/linux/amd64/certdist
           mv artifacts/certdist-linux-arm64/certdist-linux-arm64 build/linux/arm64/certdist
-          find .
-          file build/linux/amd64/certdist
-          file build/linux/arm64/certdist
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
