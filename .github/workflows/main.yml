@@ -71,7 +71,7 @@ jobs:
           python-version: '3.x'
 
       - name: Build
-        run: go build -v -o build/certdist
+        run: CGO_ENABLED=0 go build -v -o build/certdist
 
       - name: Run integration test
         run: |
