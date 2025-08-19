@@ -1,27 +1,21 @@
 # go-certdist
 
-`go-certdist` is a simple and secure tool for distributing SSL/TLS certificates from a central server to multiple clients. It uses `age` for end-to-end encryption, ensuring that certificates are only readable by the intended client.
+`go-certdist` is a simple and secure tool for distributing SSL/TLS certificates from a central server to 
+multiple clients. It uses `age` for end-to-end encryption, ensuring that certificates are only readable by the intended client.
 Allowlisting age public keys is implemented to prevent unauthorized access to certificates.
+
+One use case is for selfhosted/local setups, for example, a central server acquires a wildcard certificate for a domain and
+distributes it to multiple local servers that are using that certificate.
 
 ## Features
 
-- **Secure by Design**: Leverages `age` encryption for strong, modern, and easy-to-use public-key cryptography. This allows even secure transmissions via http, but still a reverse proxy for https is encouraged.
+- **Secure by Design**: Leverages `age` encryption for strong, modern, and easy-to-use public-key cryptography. This allows even secure transmissions via http, but still a reverse proxy for https is _encouraged_.
 - **Efficient Distribution**: Clients only updates the certificate when the client's version is expired or missing.
 - **Simple Configuration**: Uses straightforward YAML files for both server and client configuration.
 - **Automated Renewals**: Automatically execute shell commands on the client after a new certificate is successfully downloaded.
 - **Cross-Platform**: Builds and runs on Linux, macOS, and Windows.
 
 ## Getting Started
-
-### Build from Source
-
-First, clone the repository and build the binary:
-
-```bash
-go build
-```
-
-This will create a `go-certdist` (or `go-certdist.exe`) binary in the project root.
 
 ### Download release or docker container
 
@@ -37,10 +31,22 @@ or
 curl -L https://github.com/markus-seidl/go-certdist/releases/latest/download/certdist-linux-amd64 -o certdist
 ```
 
+### Build from Source
+
+First, clone the repository and build the binary:
+
+```bash
+go build
+```
+
+This will create a `go-certdist` (or `go-certdist.exe`) binary in the project root.
+
+
 ### 2. Generate Keys
 
-`go-certdist` uses `age` key pairs for encryption. The server needs the client's *public key* to encrypt the certificate, and the client uses its *private key* to decrypt it.
-It's perfectly fine to also use age-keygen to generate these keys, if installed.
+`go-certdist` uses `age` key pairs for encryption. The server needs the client's *public key* to encrypt the certificate, 
+and the client uses its *private key* to decrypt it.
+It's perfectly fine to also use `age-keygen` to generate these keys, if installed.
 
 Generate a new key pair:
 
@@ -74,7 +80,7 @@ Now, edit these files with your specific settings.
 
 ### Server
 
-The server is responsible for serving certificates to authorized clients.
+The server is responsible for serving certificates to authorized clients. Clients are identified by their age public keys.
 
 **Example `server.yml`:**
 
@@ -90,8 +96,9 @@ public_age_keys:
 ```
 
 - `port`: The port the server will listen on.
+- `listen_address`: The IP address the server will listen on, defaults to `127.0.0.1`/localhost.
 - `certificate_directories`: A list of directories where the server will look for certificates.
-- `public_age_keys`: A allowlist of client public keys that are authorized to request certificates.
+- `public_age_keys`: An allowlist of client age public keys that are authorized to request certificates.
 
 **To start the server:**
 
@@ -141,4 +148,3 @@ To run the end-to-end integration test:
 go build -o certdist
 ./scripts/run-integration-test.sh
 ```
-
