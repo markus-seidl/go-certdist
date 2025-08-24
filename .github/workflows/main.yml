@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [linux, windows, darwin]
+        goos: [linux, windows, darwin, freebsd]
         goarch: [amd64, arm64]
         exclude:
           - goos: darwin
@@ -166,3 +166,5 @@ jobs:
             artifacts/certdist-linux-arm64/*
             artifacts/certdist-windows-amd64/*
             artifacts/certdist-darwin-arm64/*
+            artifacts/certdist-freebsd-amd64/*
+            artifacts/certdist-freebsd-arm64/*
