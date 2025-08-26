@@ -15,6 +15,16 @@ distributes it to multiple local servers that are using that certificate.
 - **Automated Renewals**: Automatically execute shell commands on the client after a new certificate is successfully downloaded.
 - **Cross-Platform**: Builds and runs on Linux, macOS, and Windows.
 
+## Links
+
+| Repository                                                                   | Description               |
+|------------------------------------------------------------------------------|---------------------------|
+| [go-certdist](https://github.com/markus-seidl/go-certdist)                   | Root project              |
+| [go-certdist-opnsense](https://github.com/markus-seidl/go-certdist-opnsense) | OPNSense Plugin           |
+| [go-certdist-helm](https://github.com/markus-seidl/go-certdist-helm)         | Helm Chart                |
+| [go-certdist-ansible](https://github.com/markus-seidl/go-certdist-ansible)   | Ansible Installation Role |
+
+
 ## Getting Started
 
 ### Download release or docker container
