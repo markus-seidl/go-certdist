@@ -23,6 +23,7 @@ distributes it to multiple local servers that are using that certificate.
 | [go-certdist-opnsense](https://github.com/markus-seidl/go-certdist-opnsense) | OPNSense Plugin           |
 | [go-certdist-helm](https://github.com/markus-seidl/go-certdist-helm)         | Helm Chart                |
 | [go-certdist-ansible](https://github.com/markus-seidl/go-certdist-ansible)   | Ansible Installation Role |
+| [go-certdist-truenas](https://github.com/markus-seidl/go-certdist-truenas)   | TrueNAS App               |
 
 
 ## Getting Started
