@@ -23,12 +23,23 @@ func ExecuteClient(config common.ClientModeConfig) {
 		log.Fatal().Err(err).Msg("Client configuration validation failed")
 	}
 
-	for _, certConfig := range config.Certificate {
-		log.Info().Msg("==================================================================")
-		log.Info().Str("server", config.ConnectionDetails.Server).Str("domain", certConfig.Domain).Msg("Requesting certificate from server")
-		if err := processCertificateRequest(config, certConfig); err != nil {
-			log.Error().Err(err).Str("domain", certConfig.Domain).Msg("Failed to process certificate request")
+	for {
+		for _, certConfig := range config.Certificate {
+			log.Info().Msg("==================================================================")
+			log.Info().Str("server", config.ConnectionDetails.Server).Str("domain", certConfig.Domain).Msg("Requesting certificate from server")
+			if err := processCertificateRequest(config, certConfig); err != nil {
+				log.Error().Err(err).Str("domain", certConfig.Domain).Msg("Failed to process certificate request")
+			}
 		}
+
+		if config.Interval <= 0 {
+			log.Info().Msg("Interval not configured, exiting after single execution")
+			break
+		}
+
+		waitDuration := time.Duration(config.Interval) * time.Hour
+		log.Info().Int("hours", config.Interval).Msg("Waiting until next execution")
+		time.Sleep(waitDuration)
 	}
 }
 

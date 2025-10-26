@@ -45,6 +45,7 @@ type ClientModeConfig struct {
 	ConnectionDetails ClientConnectionConfig `yaml:"connection"`
 	Certificate       []CertificateConfig    `yaml:"certificate"`
 	AgeKey            AgeKeyConfig           `yaml:"age_key"`
+	Interval          int                    `yaml:"interval"`
 }
 
 //

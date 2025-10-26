@@ -54,6 +54,7 @@ func WriteDummyServerConfig() {
 
 func WriteDummyClientConfig() {
 	dummyConfig := ClientModeConfig{
+		Interval: -1,
 		ConnectionDetails: ClientConnectionConfig{
 			Server: "localhost:8080",
 		},
