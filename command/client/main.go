@@ -32,13 +32,13 @@ func ExecuteClient(config common.ClientModeConfig) {
 			}
 		}
 
-		if config.Interval <= 0 {
-			log.Info().Msg("Interval not configured, exiting after single execution")
+		if config.IntervalHours <= 0 {
+			log.Info().Msg("IntervalHours not configured, exiting after single execution")
 			break
 		}
 
-		waitDuration := time.Duration(config.Interval) * time.Hour
-		log.Info().Int("hours", config.Interval).Msg("Waiting until next execution")
+		waitDuration := time.Duration(config.IntervalHours) * time.Hour
+		log.Info().Int("hours", config.IntervalHours).Msg("Waiting until next execution")
 		time.Sleep(waitDuration)
 	}
 }

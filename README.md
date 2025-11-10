@@ -124,6 +124,7 @@ The client requests certificates from the server for specific domains.
 **Example `client.yml`:**
 
 ```yaml
+interval_hours: 24
 connection:
   server: "https://your-server.com"
 age_key:
